@@ -28,18 +28,19 @@ if __name__ == "__main__":
         i = 0
         for line in f:
             for k, c in enumerate(line.rstrip()):
-                grid[k + 1j * i] = c
+                loc = k + 1j * i
+                grid[loc] = c
                 if c == "^":
-                    start = k + 1j * i
+                    start = loc
                     dir = -1j
                 elif c == ">":
-                    start = k + 1j * i
+                    start = loc
                     dir = 1
                 elif c == "<":
-                    start = k + 1j * i
+                    start = loc
                     dir = -1
                 elif c == "v":
-                    start = k + 1j * i
+                    start = loc
                     dir = 1j
             i += 1
 
