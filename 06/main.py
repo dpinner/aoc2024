@@ -1,10 +1,13 @@
 import sys
-from typing import Dict, Tuple
+from typing import Dict, Set, Tuple
 
 
-def count(loc: complex, dir: complex, grid: Dict[complex, str]) -> Tuple[int, bool]:
+def path(
+    start: complex, dir: complex, grid: Dict[complex, str]
+) -> Tuple[Set[complex], bool]:
     visited = set()
     loop = False
+    loc = start
     while loc in grid and not loop:
         if (loc, dir) in visited:
             loop = True
@@ -13,7 +16,7 @@ def count(loc: complex, dir: complex, grid: Dict[complex, str]) -> Tuple[int, bo
             dir *= 1j
         loc += dir
 
-    return len(set(loc for loc, _ in visited)), loop
+    return set(loc for loc, _ in visited), loop
 
 
 if __name__ == "__main__":
@@ -40,14 +43,16 @@ if __name__ == "__main__":
                     dir = 1j
             i += 1
 
-    print(count(start, dir, grid)[0])
+    visited = path(start, dir, grid)[0]
+
+    print(len(visited))
 
     obs = 0
-    for loc in grid:
+    for loc in visited:
         if loc == start or grid[loc] == "#":
             continue
         grid[loc] = "#"
-        if count(start, dir, grid)[1]:
+        if path(start, dir, grid)[1]:
             obs += 1
         grid[loc] = "."
 
