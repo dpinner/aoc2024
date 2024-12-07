@@ -2,12 +2,6 @@ import sys
 from math import log
 from typing import List, Set
 
-op_map = {
-    "*": lambda a, b: a * b,
-    "+": lambda a, b: a + b,
-    "||": lambda a, b: int(str(a) + str(b)),
-}
-
 
 def is_valid(target: int, vals: List[int], operators: Set[str]) -> bool:
     if len(vals) == 0:
