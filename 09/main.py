@@ -32,16 +32,15 @@ def checksum_2(file_map: str) -> int:
             continue
 
         sz = int(file_map[i])
-        new_idx = min(
-            (j for j in range(1, i, 2) if free_space[j] >= sz),
-            default=None,
-        )
-        if new_idx is not None:
-            moved.add(i)
-            free_space[new_idx] -= sz
-            if new_idx not in filled:
-                filled[new_idx] = []
-            filled[new_idx] += [i // 2] * sz
+        try:
+            new_idx = next(j for j in range(1, i, 2) if free_space[j] >= sz)
+        except StopIteration:
+            continue
+        moved.add(i)
+        free_space[new_idx] -= sz
+        if new_idx not in filled:
+            filled[new_idx] = []
+        filled[new_idx] += [i // 2] * sz
 
     ptr = 0
     for i in range(len(file_map)):
@@ -69,4 +68,8 @@ if __name__ == "__main__":
         file_map = f.read().strip()
 
     print(checksum_1(file_map))
+    import time
+
+    start_time = time.time()
     print(checksum_2(file_map))
+    print(time.time() - start_time)
