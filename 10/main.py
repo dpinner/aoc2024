@@ -30,12 +30,10 @@ if __name__ == "__main__":
     trailheads: Set[complex] = set()
     dir = 0
     with open(filename, "r") as f:
-        i = 0
-        for line in f:
-            for k, c in enumerate(line.rstrip()):
-                loc = k + 1j * i
-                grid[loc] = int(c)
-                if c == "0":
-                    trailheads.add(loc)
-            i += 1
+        grid = {
+            k + i * 1j: int(c)
+            for i, line in enumerate(f)
+            for k, c in enumerate(line.rstrip())
+        }
+    trailheads = {loc for loc in grid if grid[loc] == 0}
     print([sum(x) for x in zip(*(rating(t, grid) for t in trailheads))])
