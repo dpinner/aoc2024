@@ -1,9 +1,9 @@
 import sys
 from collections import deque
-from typing import Dict, Set
+from typing import Dict, Set, Tuple
 
 
-def rating(trailhead: complex, grid: Dict[complex, int]) -> int:
+def rating(trailhead: complex, grid: Dict[complex, int]) -> Tuple[int, int]:
     dirs = set([1j, 1, -1, -1j])
     q = deque([(0, (trailhead,))])
     peaks = set()
