@@ -29,8 +29,7 @@ def blink(val: int, times: int, memo: Dict[Tuple[int, int], int]) -> int:
 if __name__ == "__main__":
     filename = sys.argv[1]
     blinks = int(sys.argv[2])
-    memo = {}
     with open(filename, "r") as f:
         vals = list(map(int, f.read().split()))
 
-    print(sum(blink(v, blinks, memo) for v in vals))
+    print(sum(blink(v, blinks, {}) for v in vals))
