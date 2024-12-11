@@ -1,5 +1,5 @@
 import sys
-from math import ceil, log10
+from math import log10
 from typing import Dict, Tuple
 
 
@@ -11,24 +11,19 @@ def blink(val: int, times: int, memo: Dict[Tuple[int, int], int]) -> int:
         return 1
 
     if val == 0:
-        count = blink(1, times - 1, memo)
-        memo[(val, times)] = count
-        return count
+        memo[(val, times)] = blink(1, times - 1, memo)
+        return memo[(val, times)]
 
-    log_val = log10(val)
-    digits = ceil(log_val)
-    if digits == log_val:
-        digits += 1
+    digits = int(1 + log10(val))
     if digits % 2 == 0:
         pow = 10 ** (digits // 2)
-        left_val, right_val = val // pow, val % pow
-        count = blink(left_val, times - 1, memo) + blink(right_val, times - 1, memo)
-        memo[(val, times)] = count
-        return count
+        memo[(val, times)] = blink(val // pow, times - 1, memo) + blink(
+            val % pow, times - 1, memo
+        )
+        return memo[(val, times)]
 
-    count = blink(val * 2024, times - 1, memo)
-    memo[(val, times)] = count
-    return count
+    memo[(val, times)] = blink(val * 2024, times - 1, memo)
+    return memo[(val, times)]
 
 
 if __name__ == "__main__":
