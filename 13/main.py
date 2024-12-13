@@ -2,12 +2,14 @@ import sys
 import numpy as np
 
 
-def cost(a, b, prize):
+def cost(a, b, prize, offset=None):
     det = a[0] * b[1] - a[1] * b[0]
     if det == 0:
         return 0
 
-    vec = np.array([[b[1], -b[0]], [-a[1], a[0]]]).dot(prize)
+    target = prize if offset is None else prize + offset
+
+    vec = np.array([[b[1], -b[0]], [-a[1], a[0]]]).dot(target)
 
     if any(v % det != 0 for v in vec):
         return 0
@@ -38,20 +40,9 @@ if __name__ == "__main__":
                 )
 
     print(
+        sum(cost(*vecs) for vecs in zip(A_vecs, B_vecs, X_vecs)),
         sum(
-            cost(
-                A_vecs[i],
-                B_vecs[i],
-                X_vecs[i],
-            )
-            for i in range(len(A_vecs))
-        ),
-        sum(
-            cost(
-                A_vecs[i],
-                B_vecs[i],
-                X_vecs[i] + np.array([10000000000000, 10000000000000]),
-            )
-            for i in range(len(A_vecs))
+            cost(*vecs, offset=np.array([10000000000000, 10000000000000]))
+            for vecs in zip(A_vecs, B_vecs, X_vecs)
         ),
     )
