@@ -2,10 +2,27 @@ import sys
 import numpy as np
 
 
+def degenerate_cost(a, b, prize, offset):
+
+    if np.all(np.array(b) == 0):
+        return (
+            0
+            if np.all(np.array(a) == 0)
+            or np.any(np.array(prize + offset) % np.array(a))
+            else np.max(prize + offset) // np.max(a)
+        )
+
+    return (
+        0
+        if np.any(np.array(prize + offset) % np.array(b))
+        else np.max(prize + offset) // np.max(b)
+    )
+
+
 def cost(a, b, prize, offset=None):
     det = a[0] * b[1] - a[1] * b[0]
     if det == 0:
-        return 0
+        return degenerate_cost(a, b, prize, offset)
 
     target = prize if offset is None else prize + offset
 
