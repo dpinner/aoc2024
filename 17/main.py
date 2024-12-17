@@ -68,10 +68,12 @@ class ChronospatialComputer:
         i = -1
         start = 0
         while i >= -len(self.program):
+            # because there's a single 0,3 op in the program
             A += ["0", "0", "0"]
             found = False
             for d in range(start, 8):
                 a = int("".join(A), 2) + d
+                # manual evaluation of the input program code
                 if (((d ^ 1) ^ (a // (2 ** (d ^ 1)))) ^ 4) % 8 == self.program[i]:
                     found = True
                     break
