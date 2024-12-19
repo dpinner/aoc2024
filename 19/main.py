@@ -2,9 +2,9 @@ import sys
 from typing import Dict, List, Set
 
 
-def dp(towel: str, longest: int, memo: Dict[str, int], avail: Set[str]) -> int:
+def dp(towel: str, longest: int, avail: Set[str], memo: Dict[str, int]) -> int:
     if towel in memo:
-        return memo[towel]
+        return
     memo[towel] = 1 if towel in avail else 0
     n = 0
     for j in range(1, longest + 1):
@@ -12,8 +12,6 @@ def dp(towel: str, longest: int, memo: Dict[str, int], avail: Set[str]) -> int:
             n += memo[towel[j:]]
 
     memo[towel] += n
-
-    return memo[towel]
 
 
 if __name__ == "__main__":
@@ -32,7 +30,7 @@ if __name__ == "__main__":
         i = len(p) - 1
         while i >= 0:
             substr = p[i:]
-            dp(substr, longest, memo, avail)
+            dp(substr, longest, avail, memo)
             i -= 1
         n += memo[p]
         count += 1 if memo[p] > 0 else 0
