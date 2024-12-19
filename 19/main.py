@@ -18,7 +18,6 @@ def dp(towel: str, longest: int, memo: Dict[str, int], avail: Set[str]) -> int:
 
 if __name__ == "__main__":
     filename = sys.argv[1]
-    global avail
     desired: List[str]
     with open(filename, "r") as f:
         avail = set(x.strip() for x in next(f).strip().split(","))
