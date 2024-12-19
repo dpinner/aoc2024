@@ -27,11 +27,9 @@ if __name__ == "__main__":
     n = 0
     count = 0
     for p in desired:
-        i = len(p) - 1
-        while i >= 0:
+        for i in range(len(p) - 1, -1, -1):
             substr = p[i:]
             dp(substr, longest, avail, memo)
-            i -= 1
         n += memo[p]
         count += 1 if memo[p] > 0 else 0
 
